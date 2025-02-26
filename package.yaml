@@ -1,0 +1,60 @@
+name:                data-reify-gadt
+version:             0.1.0.0
+github:              "Arthi-chaud/data-reify-gadt"
+license:             BSD-3-Clause
+author:              "Arthur Jamet"
+maintainer:          "aj530@kent.ac.uk"
+copyright:           "2025 Arthur Jamet"
+
+extra-source-files:
+- README.md
+
+# Metadata used when publishing your package
+synopsis:            Data.Reify for GADTs 
+category:            Data 
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/Arthi-chaud/data-reify-gadt#readme>
+
+default-extensions:
+- RankNTypes
+- QuantifiedConstraints
+- UndecidableInstances
+- ExistentialQuantification
+- TypeOperators
+
+dependencies:
+- base >= 4.7 && < 5
+- hashable
+- containers
+- unordered-containers
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+library:
+  source-dirs: src
+  exposed-modules: 
+    - Data.Reify.GADT
+    - Data.Reify.GADT.Graph
+
+tests:
+  data-reify-gadt-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - data-reify-gadt

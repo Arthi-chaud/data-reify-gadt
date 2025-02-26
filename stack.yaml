@@ -1,0 +1,4 @@
+snapshot: nightly-2025-02-26
+packages:
+- .
+system-ghc: true
