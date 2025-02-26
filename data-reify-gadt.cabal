@@ -70,5 +70,6 @@ test-suite data-reify-gadt-test
     , containers
     , data-reify-gadt
     , hashable
+    , hspec
     , unordered-containers
   default-language: Haskell2010
