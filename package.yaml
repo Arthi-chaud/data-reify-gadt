@@ -55,6 +55,13 @@ library:
     - Data.Reify.GADT
     - Data.Reify.GADT.Graph
 
+executables:
+  example-ast:
+    source-dirs: examples
+    main: ast.hs
+    dependencies:
+    - data-reify-gadt
+
 tests:
   test:
     main:                Spec.hs
