@@ -2,3 +2,5 @@ snapshot: nightly-2025-02-26
 packages:
 - .
 system-ghc: true
+# For support before 9.10
+extra-deps: []

@@ -39,13 +39,7 @@ jobs:
       fail-fast: false
       matrix:
         ghc-version: [
-          # 9.0.2,
-          # 9.2.8,
-          # 9.4.8, 
-          # 9.6.6,
-          # 9.8.4,
           9.10.1,
-          # 9.12.1
         ]
     runs-on: ubuntu-latest
     steps:
@@ -99,13 +93,7 @@ jobs:
       fail-fast: false
       matrix:
         ghc-version: [
-          # 9.0.2,
-          # 9.2.8,
-          # 9.4.8, 
-          # 9.6.6,
-          # 9.8.4,
           9.10.1,
-          # 9.12.1
         ]
     if: ${{ needs.changes.outputs.changed == 'true' && always() }}
     steps:
