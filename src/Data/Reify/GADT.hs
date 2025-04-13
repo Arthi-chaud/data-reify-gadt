@@ -27,9 +27,9 @@ import System.Mem.StableName
 -- and a way to map over the deferenced internals.
 class MuRef (a :: Type -> Type) where
     type DeRef a :: (Type -> Type) -> (Type -> Type)
-    type E a :: Type -> Type
+    type SubNode a :: Type -> Type
     mapDeRef ::
-        (Applicative f, e ~ E a) =>
+        (Applicative f, e ~ SubNode a) =>
         (forall t'. (MuRef e) => e t' -> f (u t')) ->
         a t ->
         f ((DeRef a) u t)
@@ -37,7 +37,7 @@ class MuRef (a :: Type -> Type) where
 -- | 'reifyGraph' takes a data structure that admits 'MuRef', and returns a 'Graph' that contains
 -- the dereferenced nodes, with their children as 'Unique's rather than recursive values.
 reifyGraph ::
-    (MuRef s, E (E s) ~ E s, DeRef (E s) ~ DeRef s) =>
+    (MuRef s, SubNode (SubNode s) ~ SubNode s, DeRef (SubNode s) ~ DeRef s) =>
     s a ->
     IO (Graph (DeRef s) a)
 reifyGraph m = do
@@ -51,7 +51,7 @@ reifyGraph m = do
 --
 -- This allows for, e.g., a list of mutually recursive structures.
 reifyGraphs ::
-    (MuRef s, E (E s) ~ E s, DeRef (E s) ~ DeRef s, Traversable t) =>
+    (MuRef s, SubNode (SubNode s) ~ SubNode s, DeRef (SubNode s) ~ DeRef s, Traversable t) =>
     t (s e) ->
     IO (t (Graph (DeRef s) e))
 reifyGraphs coll = do
@@ -67,7 +67,7 @@ reifyGraphs coll = do
 -- Reify a data structure's 'Graph' using the supplied map of stable names and
 -- unique supply.
 reifyWithContext ::
-    (MuRef s, E (E s) ~ E s, DeRef (E s) ~ DeRef s) =>
+    (MuRef s, SubNode (SubNode s) ~ SubNode s, DeRef (SubNode s) ~ DeRef s) =>
     MVar (HashMap DynStableName Unique) ->
     MVar Unique ->
     s a ->
@@ -81,8 +81,7 @@ reifyWithContext rt1 uVar j = do
 
 -- The workhorse for 'reifyGraph' and 'reifyGraphs'.
 findNodes ::
-    -- ‘DeRef (E (e t) t') ~ DeRef (e t')’
-    (MuRef s, E (E s) ~ E s, DeRef (E s) ~ DeRef s) =>
+    (MuRef s, SubNode (SubNode s) ~ SubNode s, DeRef (SubNode s) ~ DeRef s) =>
     -- | A map of stable names to unique numbers.
     --   Invariant: all 'Uniques' that appear in the range are less
     --   than the current value in the unique name supply.

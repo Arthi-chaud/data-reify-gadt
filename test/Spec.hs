@@ -18,7 +18,7 @@ newtype Fix f a = Fx (f (Fix f) a)
 
 instance MuRef (Fix ExprF) where
     type DeRef (Fix ExprF) = ExprF
-    type E (Fix ExprF) = Fix ExprF
+    type SubNode (Fix ExprF) = Fix ExprF
     mapDeRef f (Fx e) = case e of
         Val a -> pure $ Val a
         Dup a -> Dup <$> f a

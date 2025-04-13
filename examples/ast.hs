@@ -20,7 +20,7 @@ type Tree = Fix TreeF
 
 instance MuRef (Fix TreeF) where
     type DeRef (Fix TreeF) = TreeF
-    type E (Fix TreeF) = Fix TreeF
+    type SubNode (Fix TreeF) = Fix TreeF
     mapDeRef f (Fx e) = case e of
         Leaf a -> pure $ Leaf a
         Node l r -> Node <$> f l <*> f r
